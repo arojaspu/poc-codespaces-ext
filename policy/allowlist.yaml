@@ -1,0 +1,31 @@
+# Fuente unica de verdad de la PoC.
+# De aqui se genera el bloque extensions.allowed del devcontainer.json
+# y de aqui lee ext_guard. El CI falla si ambos divergen.
+version: 1
+
+# audit   -> solo registra violaciones
+# enforce -> registra y desinstala
+mode: audit
+
+allowed:
+  # --- stack Python aprobado ---
+  - id: ms-python.python
+  - id: ms-python.vscode-pylance
+  - id: ms-python.debugpy
+  - id: charliermarsh.ruff
+
+  # --- extensiones inyectadas por la plataforma ---
+  # Sin esto, el guard genera falsos positivos constantes.
+  - publisher: github
+
+# Objetivos usados en los casos de prueba. NO son parte de la politica.
+test_targets:
+  - esbenp.prettier-vscode
+  - ms-toolsai.jupyter
+
+# Prefijos que el entorno instala solo y que se toleran durante la PoC
+# (se documentan como ruido, no se bloquean).
+tolerated_prefixes:
+  - github.
+  - ms-vscode-remote.
+  - ms-vscode.

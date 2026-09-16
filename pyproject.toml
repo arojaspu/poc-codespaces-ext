@@ -1,0 +1,19 @@
+[project]
+name = "inventario"
+version = "0.1.0"
+description = "App minima de apoyo para la PoC de restriccion de extensiones"
+requires-python = ">=3.12"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+
+[tool.pytest.ini_options]
+pythonpath = ["src", "tools"]
+testpaths = ["tests"]

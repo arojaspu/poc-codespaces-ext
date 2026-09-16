@@ -1,0 +1,14 @@
+[project]
+name = "ext-guard"
+version = "0.1.0"
+description = "Control detectivo/correctivo de extensiones para la PoC de Codespaces"
+requires-python = ">=3.12"
+dependencies = ["PyYAML>=6.0"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["ext_guard*"]

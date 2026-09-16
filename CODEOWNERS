@@ -1,0 +1,5 @@
+# Control de gobierno: la politica no se cambia sin revision.
+# Sustituye @tu-org/plataforma por el equipo real.
+/.devcontainer/   @tu-org/plataforma
+/policy/          @tu-org/plataforma
+/.github/         @tu-org/plataforma

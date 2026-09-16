@@ -1,0 +1,39 @@
+{
+  "name": "poc-ext-restriction",
+  "image": "mcr.microsoft.com/devcontainers/python:3.12-bookworm",
+
+  "customizations": {
+    "vscode": {
+      // Aprovisionamiento: qué se instala al crear el Codespace.
+      // OJO: esto NO restringe nada, solo instala.
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-python.debugpy",
+        "charliermarsh.ruff"
+      ],
+
+      // Restricción real. Generado desde policy/allowlist.yaml con:
+      //   python -m ext_guard render
+      // NO EDITAR A MANO: el CI valida que ambos coincidan.
+      "settings": {
+        "extensions.allowed": {
+          "ms-python.python": true,
+          "ms-python.vscode-pylance": true,
+          "ms-python.debugpy": true,
+          "charliermarsh.ruff": true,
+          "github": true,
+          "*": false
+        },
+        "extensions.autoUpdate": false,
+        "extensions.autoCheckUpdates": false,
+        "extensions.ignoreRecommendations": true,
+        "python.defaultInterpreterPath": "/usr/local/bin/python"
+      }
+    }
+  },
+
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
+  "postStartCommand": "python -m ext_guard check --json --label post-start || true",
+  "remoteUser": "vscode"
+}
