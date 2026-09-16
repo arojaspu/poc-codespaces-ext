@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 import json
 import shutil
 import subprocess
@@ -13,6 +14,10 @@ CANDIDATOS_DIR = [
     Path.home() / ".vscode" / "extensions",
 ]
 
+_PATRON_VERSION = re.compile(r"-\d+\.\d+\.\d+.*$")
+
+def _id_desde_nombre_carpeta(nombre: str) -> str:
+    return _PATRON_VERSION.sub("", nombre)
 
 def _via_cli() -> list[str] | None:
     """Fuente primaria: la CLI del editor."""
@@ -55,6 +60,11 @@ def _via_disco() -> list[str]:
             for carpeta in base.iterdir():
                 if carpeta.is_dir() and (carpeta / "package.json").exists():
                     nombre = carpeta.name.rsplit("-", 1)[0]
+                    if "." in nombre:
+                        encontradas.add(nombre)
+
+                if carpeta.is_dir() and (carpeta / "package.json").exists():
+                    nombre = _id_desde_nombre_carpeta(carpeta.name)  # <- antes: carpeta.name.rsplit("-", 1)[0]
                     if "." in nombre:
                         encontradas.add(nombre)
     return sorted(encontradas)
