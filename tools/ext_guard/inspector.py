@@ -16,8 +16,10 @@ CANDIDATOS_DIR = [
 
 _PATRON_VERSION = re.compile(r"-\d+\.\d+\.\d+.*$")
 
+
 def _id_desde_nombre_carpeta(nombre: str) -> str:
     return _PATRON_VERSION.sub("", nombre)
+
 
 def _via_cli() -> list[str] | None:
     """Fuente primaria: la CLI del editor."""
@@ -54,18 +56,18 @@ def _via_disco() -> list[str]:
                 for item in json.loads(manifest.read_text(encoding="utf-8")):
                     ident = item.get("identifier", {}).get("id")
                     if ident:
-                        encontradas.add(ident)
+                        # Extensiones con binarios nativos por plataforma
+                        # (ej. ruff, debugpy) a veces dejan en extensions.json
+                        # una entrada huerfana de una version anterior con la
+                        # version/plataforma pegada al id. Se normaliza igual
+                        # que los nombres de carpeta.
+                        encontradas.add(_id_desde_nombre_carpeta(ident))
             except (OSError, ValueError):
                 pass
         if base.is_dir():
             for carpeta in base.iterdir():
                 if carpeta.is_dir() and (carpeta / "package.json").exists():
-                    nombre = carpeta.name.rsplit("-", 1)[0]
-                    if "." in nombre:
-                        encontradas.add(nombre)
-
-                if carpeta.is_dir() and (carpeta / "package.json").exists():
-                    nombre = _id_desde_nombre_carpeta(carpeta.name)  # <- antes: carpeta.name.rsplit("-", 1)[0]
+                    nombre = _id_desde_nombre_carpeta(carpeta.name)
                     if "." in nombre:
                         encontradas.add(nombre)
     return sorted(encontradas)
