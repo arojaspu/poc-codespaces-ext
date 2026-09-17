@@ -13,6 +13,7 @@ allowed:
   - id: ms-python.vscode-pylance
   - id: ms-python.debugpy
   - id: charliermarsh.ruff
+  - id: njpwerner.autodocstring
 
   # --- extensiones inyectadas por la plataforma ---
   # Sin esto, el guard genera falsos positivos constantes.
