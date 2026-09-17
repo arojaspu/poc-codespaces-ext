@@ -37,7 +37,7 @@ def _via_cli() -> list[str] | None:
     if salida.returncode != 0:
         return None
     candidatas = (linea.strip() for linea in salida.stdout.splitlines())
-    return sorted({c for c in candidatas if _PATRON_ID_VALIDO.fullmatch(c)})
+    return sorted({c for c in candidatas if _PATRON_VERSION.fullmatch(c)})
 
 
 def _via_disco() -> list[str]:
