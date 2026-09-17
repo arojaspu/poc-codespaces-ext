@@ -14,10 +14,10 @@ CANDIDATOS_DIR = [
     Path.home() / ".vscode" / "extensions",
 ]
 
-_PATRON_ID_VALIDO = re.compile(r"^[A-Za-z0-9][A-Za-z0-9-]*\.[A-Za-z0-9][A-Za-z0-9-]*$")
+_PATRON_VERSION = re.compile(r"-\d+\.\d+\.\d+.*$")
 
 def _id_desde_nombre_carpeta(nombre: str) -> str:
-    return _PATRON_ID_VALIDO.sub("", nombre)
+    return _PATRON_VERSION.sub("", nombre)
 
 def _via_cli() -> list[str] | None:
     """Fuente primaria: la CLI del editor."""
