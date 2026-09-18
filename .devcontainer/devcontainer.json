@@ -14,6 +14,7 @@
       // Restricción real. Generado desde policy/allowlist.yaml con:
       //   python -m ext_guard render
       // NO EDITAR A MANO: el CI valida que ambos coincidan.
+      //
       "settings": {
         "extensions.allowed": {
           "charliermarsh.ruff": true,
